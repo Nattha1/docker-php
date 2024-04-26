@@ -1,0 +1,43 @@
+name: PHP Web App CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+
+    - name: Install dependencies
+      run: composer install
+
+    - name: Build Docker image
+      run: |
+        docker build -t my-php-web-app:${{ github.run_number }} .
+        docker tag my-php-web-app:${{ github.run_number }} my-php-web-app:latest
+
+    - name: Run Docker container
+      run: |
+        docker run -d --name my-php-web-app-container -p 8080:80 my-php-web-app:${{ github.run_number }}
+
+    - name: Push Docker image to registry
+      uses: docker/login-action@v2
+      with:
+        registry: docker.pkg.github.com
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish Docker image
+      run: |
+        docker push my-php-web-app:${{ github.run_number }}
+        docker push my-php-web-app:latest
