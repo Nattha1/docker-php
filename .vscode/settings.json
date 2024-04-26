@@ -1,2 +1,7 @@
 {
+    "name": "your-project-name",
+    "description": "Your project description",
+    "require": {
+        "php": "^7.4"
+    }
 }
