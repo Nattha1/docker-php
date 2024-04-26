@@ -394,6 +394,7 @@
                     // ปิดแถวสุดท้าย (กรณีที่ไม่ได้ปิดแถวในการวน loop)
                     echo '</div>';
                 } else {
+                    
                     echo "No movies available";
                 }
                 ?>
