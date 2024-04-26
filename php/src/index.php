@@ -366,7 +366,7 @@
                         $stmt->close();
                     }
 
-                    
+
                     // Close connection
                     $conn->close();
                     ?>
@@ -401,7 +401,6 @@
                 ?>
             </div>
     </section>
-
     <script>
         // JavaScript for automatic slideshow
         const slideshowContainer = document.getElementById('slideshow-container');
