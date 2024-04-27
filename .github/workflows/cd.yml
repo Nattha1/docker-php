@@ -1,9 +1,8 @@
 name: PHP Web App CI/CD
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
   build-and-deploy:
@@ -39,3 +38,9 @@ jobs:
     - name: Publish Docker image
       run: |
         docker-compose push
+
+    - name: Create release artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: release-artifact
+        path: /path/to/your/artifact
