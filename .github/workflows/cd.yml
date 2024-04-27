@@ -23,12 +23,11 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t my-php-web-app:${{ github.run_number }} .
-        docker tag my-php-web-app:${{ github.run_number }} my-php-web-app:latest
+        docker-compose build
 
     - name: Run Docker container
       run: |
-        docker run -d --name my-php-web-app-container -p 8080:80 my-php-web-app:${{ github.run_number }}
+        docker-compose up -d
 
     - name: Push Docker image to registry
       uses: docker/login-action@v2
@@ -39,5 +38,4 @@ jobs:
 
     - name: Publish Docker image
       run: |
-        docker push my-php-web-app:${{ github.run_number }}
-        docker push my-php-web-app:latest
+        docker-compose push
