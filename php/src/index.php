@@ -326,7 +326,7 @@
             <div class="menu-item" id="userPoint">Point : <?php echo $points; ?></div>
             <div class="menu-item" id="logOut">Log out</div>
         </div>
-        <a href="index.php" class="nav-link"><i class="fas fa-home"></i> Homepage</a>
+        <a href="index.php" class="nav-link"><i class="fas fa-home"></i> Homeยฟเ</a>
         <a href="homepage.php" class="nav-link"><i class="fas fa-film"></i> Movie</a>
         <a href="promotion.php" class="nav-link"><i class="fas fa-percent"></i> Promotion</a>
     </nav>
