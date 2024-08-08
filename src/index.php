@@ -347,10 +347,17 @@
                 <div class="image-container" id="slideshow-container">
                     <?php
                     // Query to fetch images with specific PosterID from database
+                    // Query to fetch images with specific PosterID from database
                     $posterIds = ['0000001', '0000003', '0000002']; // เพิ่ม PosterID ที่ต้องการ
                     foreach ($posterIds as $posterId) {
                         $sql = "SELECT Poster FROM Poster_Promotion WHERE PosterID = ?";
                         $stmt = $conn->prepare($sql);
+
+                        // ตรวจสอบว่าเตรียมคำสั่งสำเร็จหรือไม่
+                        if ($stmt === false) {
+                            die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+                        }
+
                         $stmt->bind_param('s', $posterId);
                         $stmt->execute();
                         $result = $stmt->get_result();
@@ -365,6 +372,7 @@
                         // Close statement
                         $stmt->close();
                     }
+
 
 
                     // Close connection

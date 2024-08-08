@@ -1,3 +1,0 @@
-[build]
-  command = "composer install && php your_build_script.php"
-  publish = "php"  # ต้องระบุโฟลเดอร์ที่มีไฟล์ HTML ที่จะใช้เป็นเว็บไซต์ของคุณ
