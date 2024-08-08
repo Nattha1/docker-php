@@ -1,5 +1,5 @@
 <?php
-        $host = 'db';
+         $host = 'db';
          $user = 'MYSQL_USER';
          $pass = 'MYSQL_PASSWORD';
          $db = 'MYSQL_DATABASE';
