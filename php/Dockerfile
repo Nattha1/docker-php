@@ -1,21 +1,26 @@
-FROM php:8.0-apache
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
-RUN apt-get update && apt-get upgrade -y
+# Use an official PHP runtime as a parent image
+FROM php:7.4-apache
 
-# คัดลอกโค้ดไปยัง container
-COPY src/ /var/www/html/
+# Set the working directory
+WORKDIR /var/www/html
 
-# คัดลอกไฟล์การตั้งค่า Apache ที่กำหนดเอง
-COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
+# Copy the current directory contents into the container at /var/www/html
+COPY . /var/www/html
 
-# เปิดใช้ mod_rewrite
-RUN a2enmod rewrite
+# Install any needed packages specified in composer.json
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    unzip \
+ && docker-php-ext-install zip
 
-# ตั้งค่าการอนุญาตไฟล์
-RUN chown -R www-data:www-data /var/www/html
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# เปิดพอร์ตที่ Apache ใช้งาน
+# Run Composer to install dependencies
+RUN composer install
+
+# Make port 80 available to the world outside this container
 EXPOSE 80
 
-# คำสั่งเพื่อเริ่มต้น Apache server
+# Define the command to run the app
 CMD ["apache2-foreground"]

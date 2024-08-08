@@ -24,8 +24,8 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t your_dockerhub_username/my-php-site ./php
-        docker push your_dockerhub_username/my-php-site
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/docker-php ./php
+        docker push ${{ secrets.DOCKER_USERNAME }}/docker-php
 
     - name: Deploy to server
       uses: appleboy/ssh-action@v0.1.1
