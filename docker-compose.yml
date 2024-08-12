@@ -10,7 +10,7 @@ services:
     volumes:
       - ./src:/var/www/html
     ports:
-      - 8089:80
+      - 8090:80
   db:
     container_name: db #กำหนดชื่อ container.
     image: mysql:5.7
