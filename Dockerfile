@@ -2,11 +2,14 @@
 FROM php:8.1-apache
 
 # ติดตั้งส่วนขยายที่จำเป็น
-RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install -j$(nproc) gd
-RUN docker-php-ext-install -j$(nproc) mysqli
-RUN docker-php-ext-install -j$(nproc) pdo pdo_mysql
+RUN curl -fsSL '[url-to-custom-php-module]' -o module-name.tar.gz \
+	&& mkdir -p /tmp/module-name \
+	&& sha256sum -c "[shasum-value]  module-name.tar.gz" \
+	&& tar -xf module-name.tar.gz -C /tmp/module-name --strip-components=1 \
+	&& rm module-name.tar.gz \
+	&& docker-php-ext-configure /tmp/module-name --enable-module-name \
+	&& docker-php-ext-install /tmp/module-name \
+	&& rm -r /tmp/module-name
 
 
 # คัดลอกไฟล์เว็บไซต์ไปยังโฟลเดอร์ที่ให้บริการของ Apache
